@@ -1,0 +1,29 @@
+{
+    "name": "destinylab/lottery-poetry-engine",
+    "description": "The engine of lottery poetry",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lance He",
+            "email": "indigofeather@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "fuelphp/filesystem": "dev-master"
+    },
+    "require-dev": {
+        "codeception/codeception": "2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DestinyLab\\LotteryPoetry\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DestinyLab\\LotteryPoetry\\Test\\": "tests/"
+        }
+    }
+}
