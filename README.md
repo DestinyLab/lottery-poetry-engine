@@ -1,6 +1,7 @@
 # Lottery-Poetry-Engine
 
 [![Build Status](https://travis-ci.org/DestinyLab/lottery-poetry-engine.svg)](https://travis-ci.org/DestinyLab/lottery-poetry-engine)
+
 Lottery-Poetry-Engine is the he engine of lottery poetry.
 
 ## Requirement
@@ -29,7 +30,7 @@ Next, update your project's composer.json file to include Lottery-Poetry-Engine:
 ## Usage
 
 ```php
-<?php
+<?phplottery-poetry-engine
 
 require_once 'vendor/autoload.php';
 
