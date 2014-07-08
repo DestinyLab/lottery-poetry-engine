@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/DestinyLab/lottery-poetry-engine.svg)](https://travis-ci.org/DestinyLab/lottery-poetry-engine)
 
-Lottery-Poetry-Engine is the he engine of lottery poetry.
+Lottery-Poetry-Engine is the engine of lottery poetry.
 
 ## Requirement
 
