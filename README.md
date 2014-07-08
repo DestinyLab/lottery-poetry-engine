@@ -30,7 +30,7 @@ Next, update your project's composer.json file to include Lottery-Poetry-Engine:
 ## Usage
 
 ```php
-<?phplottery-poetry-engine
+<?php
 
 require_once 'vendor/autoload.php';
 
