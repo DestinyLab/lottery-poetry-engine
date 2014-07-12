@@ -19,10 +19,11 @@ use InvalidArgumentException;
 trait DriverTrait
 {
     protected $resourcePath;
+    protected $fileExtension;
     protected $total = 0;
     protected $poetry = [];
 
-    public function __construct($resourcePath, $total = 0)
+    public function __construct($resourcePath, $fileExtension)
     {
         $dir = new Directory($resourcePath);
         if (! $dir->exists()) {
@@ -30,7 +31,8 @@ trait DriverTrait
         }
 
         $this->resourcePath = $resourcePath;
-        $total === 0 and $this->total = sizeof($dir->listFiles(0, ['.md']));
+        $this->fileExtension = $fileExtension;
+        $this->total = sizeof($dir->listFiles(0, ['.md']));
     }
 
     /**
@@ -60,7 +62,7 @@ trait DriverTrait
      */
     protected function getFileContent($poetryId)
     {
-        $file = new File($this->resourcePath.$poetryId.'.md');
+        $file = new File($this->resourcePath.$poetryId.'.'.$this->fileExtension);
         if (! $file->exists()) {
             throw new InvalidArgumentException('File is Not Exist!');
         }

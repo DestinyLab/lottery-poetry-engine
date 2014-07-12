@@ -11,7 +11,7 @@ class EngineTest extends \Codeception\TestCase\Test
     protected $instance;
     protected function _before()
     {
-        $this->instance = new Engine(new Suit(__DIR__.'/../resources/'));
+        $this->instance = new Engine(new Suit(__DIR__.'/../../resources/', 'md'));
     }
 
     public function testConstruct()

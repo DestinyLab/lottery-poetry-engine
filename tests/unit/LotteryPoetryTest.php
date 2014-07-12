@@ -10,15 +10,15 @@ class LotteryPoetryTest extends \Codeception\TestCase\Test
     protected $instance;
     protected function _before()
     {
-        $this->instance = new Suit(__DIR__.'/../resources/');
+        $this->instance = new Suit(__DIR__.'/../../resources/', 'md');
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testConstructWithWrong()
+    public function testConstructWithWrongPath()
     {
-        new Suit('path/to/resources/');
+        new Suit('path/to/resources/', 'md');
     }
 
     public function testGet()
