@@ -32,7 +32,7 @@ trait DriverTrait
 
         $this->resourcePath = $resourcePath;
         $this->fileExtension = $fileExtension;
-        $this->total = sizeof($dir->listFiles(0, ['.md']));
+        $this->total = sizeof($dir->listFiles(0, ['.'.$this->fileExtension]));
     }
 
     /**
