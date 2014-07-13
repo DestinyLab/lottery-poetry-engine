@@ -20,8 +20,7 @@ trait DriverTrait
 {
     protected $resourcePath;
     protected $fileExtension;
-    protected $total = 0;
-    protected $poetry = [];
+    protected $list = [];
 
     public function __construct($resourcePath, $fileExtension)
     {
@@ -30,43 +29,51 @@ trait DriverTrait
             throw new InvalidArgumentException('Invalid Path!');
         }
 
-        $this->resourcePath = $resourcePath;
+        $this->resourcePath  = $resourcePath;
         $this->fileExtension = $fileExtension;
-        $this->total = sizeof($dir->listFiles(0, ['.'.$this->fileExtension]));
+        $this->setList($dir);
     }
 
     /**
-     * @param $poetryId
-     * @return string
+     * {@inheritDoc}
      */
     public function get($poetryId)
     {
-        if (! isset($this->poetry[$poetryId])) {
-            $this->poetry[$poetryId] = $this->getFileContent($poetryId);
+        if (! isset($this->list[$poetryId])) {
+            throw new InvalidArgumentException('Invalid poetry ID!');
         }
 
-        return $this->poetry[$poetryId];
+        return $this->list[$poetryId]->getContents();
     }
 
     /**
-     * @return int
+     * {@inheritDoc}
      */
     public function total()
     {
-        return $this->total;
+        return sizeof($this->list);
     }
 
     /**
-     * @param $poetryId
-     * @return string
+     * {@inheritDoc}
      */
-    protected function getFileContent($poetryId)
+    public function getList()
     {
-        $file = new File($this->resourcePath.$poetryId.'.'.$this->fileExtension);
-        if (! $file->exists()) {
-            throw new InvalidArgumentException('File is Not Exist!');
-        }
+        return $this->list;
+    }
 
-        return $file->getContents();
+    /**
+     * @param Directory $dir
+     */
+    protected function setList(Directory $dir)
+    {
+        /**
+         * @var File $file
+         */
+        foreach ($dir->listFiles(0, ['.'.$this->fileExtension], true) as $file) {
+            $regex = '/^.*\/(.*)\.'.$this->fileExtension.'$/';
+            preg_match($regex, $file->getPath(), $matches);
+            $this->list[$matches[1]] = $file;
+        }
     }
 }

@@ -10,7 +10,7 @@ class LotteryPoetryTest extends \Codeception\TestCase\Test
     protected $instance;
     protected function _before()
     {
-        $this->instance = new Suit(__DIR__.'/../../resources/', 'md');
+        $this->instance = new Suit(__DIR__.'/../../resources', 'md');
     }
 
     /**
@@ -18,7 +18,7 @@ class LotteryPoetryTest extends \Codeception\TestCase\Test
      */
     public function testConstructWithWrongPath()
     {
-        new Suit('path/to/resources/', 'md');
+        new Suit('path/to/resources', 'md');
     }
 
     public function testGet()
@@ -37,5 +37,10 @@ class LotteryPoetryTest extends \Codeception\TestCase\Test
     public function testTotal()
     {
         $this->assertEquals(2, $this->instance->total());
+    }
+
+    public function testGetList()
+    {
+        $this->assertCount(2, $this->instance->getList());
     }
 }

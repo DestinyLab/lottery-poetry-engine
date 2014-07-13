@@ -37,9 +37,15 @@ require_once 'vendor/autoload.php';
 $suit = new DestinyLab\LotteryPoetry\Suit(__DIR__.'/resources/');
 $suit->get(1);
 $suit->total();
+$suit->getList();
 
 $engine = new DestinyLab\LotteryPoetry\Engine($suit);
+
+// get contents
 $engine->draw();
+
+// get only key
+$engine->draw(true);
 ```
 
 ## License

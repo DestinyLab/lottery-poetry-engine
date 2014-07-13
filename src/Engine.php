@@ -25,13 +25,13 @@ class Engine
     }
 
     /**
-     * @return string
+     * @param bool $getOnlyKey
+     * @return mixed|string
      */
-    public function draw()
+    public function draw($getOnlyKey = false)
     {
-        mt_srand(crc32(sha1(microtime())));
-        $result = mt_rand(1, $this->instance->total());
+        $key = array_rand($this->instance->getList());
 
-        return $this->instance->get($result);
+        return $getOnlyKey === true ? $key : $this->instance->get($key);
     }
 }

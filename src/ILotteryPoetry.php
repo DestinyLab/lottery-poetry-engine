@@ -21,6 +21,11 @@ interface ILotteryPoetry
     public function get($poetryId);
 
     /**
+     * @return array
+     */
+    public function getList();
+
+    /**
      * @return int
      */
     public function total();
