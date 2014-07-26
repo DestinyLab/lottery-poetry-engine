@@ -30,7 +30,9 @@ class Engine
      */
     public function draw($getOnlyKey = false)
     {
-        $key = array_rand($this->instance->getList());
+        $all = $this->instance->getList();
+        shuffle($all);
+        $key = array_shift($all);
 
         return $getOnlyKey === true ? $key : $this->instance->get($key);
     }

@@ -11,7 +11,7 @@ class EngineTest extends \Codeception\TestCase\Test
     protected $instance;
     protected function _before()
     {
-        $this->instance = new Engine(new Suit(__DIR__.'/../../resources', 'md'));
+        $this->instance = new Engine(new Suit([codecept_root_dir().'resources/'], 'yml'));
     }
 
     public function testConstruct()
@@ -21,8 +21,7 @@ class EngineTest extends \Codeception\TestCase\Test
 
     public function testDraw()
     {
-        $result = $this->instance->draw();
-        $this->assertEquals(5, strlen($result));
+        $this->assertArrayHasKey('title', $this->instance->draw());
     }
 
     public function testDrawOnlyKey()

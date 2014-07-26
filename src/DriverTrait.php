@@ -7,7 +7,7 @@
 namespace DestinyLab\LotteryPoetry;
 
 use Fuel\FileSystem\Directory;
-use Fuel\FileSystem\File;
+use Indigofeather\ResourceLoader\Container;
 use InvalidArgumentException;
 
 /**
@@ -18,20 +18,21 @@ use InvalidArgumentException;
  */
 trait DriverTrait
 {
-    protected $resourcePath;
-    protected $fileExtension;
+    /**
+     * @var Container
+     */
+    protected $container;
+
     protected $list = [];
 
-    public function __construct($resourcePath, $fileExtension)
+    public function __construct(array $resourcePaths = [], $fileExtension)
     {
-        $dir = new Directory($resourcePath);
-        if (! $dir->exists()) {
-            throw new InvalidArgumentException('Invalid Path!');
-        }
+        $this->container = new Container();
+        $this->container
+            ->addPaths($resourcePaths)
+            ->setDefaultFormat($fileExtension);
 
-        $this->resourcePath  = $resourcePath;
-        $this->fileExtension = $fileExtension;
-        $this->setList($dir);
+        $this->setList();
     }
 
     /**
@@ -39,11 +40,11 @@ trait DriverTrait
      */
     public function get($poetryId)
     {
-        if (! isset($this->list[$poetryId])) {
+        if (! in_array($poetryId, $this->list)) {
             throw new InvalidArgumentException('Invalid poetry ID!');
         }
 
-        return $this->list[$poetryId]->getContents();
+        return $this->container->load($poetryId);
     }
 
     /**
@@ -62,18 +63,17 @@ trait DriverTrait
         return $this->list;
     }
 
-    /**
-     * @param Directory $dir
-     */
-    protected function setList(Directory $dir)
+
+    protected function setList()
     {
-        /**
-         * @var File $file
-         */
-        foreach ($dir->listFiles(0, ['.'.$this->fileExtension], true) as $file) {
-            $regex = '/^.*\/(.*)\.'.$this->fileExtension.'$/';
-            preg_match($regex, $file->getPath(), $matches);
-            $this->list[$matches[1]] = $file;
+        $format = $this->container->getDefaultFormat();
+        foreach ($this->container->getPaths() as $path) {
+            $dir = new Directory($path);
+            foreach ($dir->listFiles(0, ['.'.$format]) as $filePath) {
+                $regex = '/^.*\/(.*)\.'.$format.'$/';
+                preg_match($regex, $filePath, $matches);
+                $this->list[] = $matches[1];
+            }
         }
     }
 }
