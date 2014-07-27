@@ -6,7 +6,6 @@
 
 namespace DestinyLab\LotteryPoetry;
 
-use Fuel\FileSystem\Directory;
 use Indigofeather\ResourceLoader\Container;
 use InvalidArgumentException;
 
@@ -25,6 +24,12 @@ trait DriverTrait
 
     protected $list = [];
 
+    /**
+     * Constructor
+     *
+     * @param array  $resourcePaths
+     * @param string $fileExtension
+     */
     public function __construct(array $resourcePaths = [], $fileExtension)
     {
         $this->container = new Container();
@@ -63,17 +68,18 @@ trait DriverTrait
         return $this->list;
     }
 
-
+    /**
+     * Set list
+     */
     protected function setList()
     {
         $format = $this->container->getDefaultFormat();
-        foreach ($this->container->getPaths() as $path) {
-            $dir = new Directory($path);
-            foreach ($dir->listFiles(0, ['.'.$format]) as $filePath) {
-                $regex = '/^.*\/(.*)\.'.$format.'$/';
-                preg_match($regex, $filePath, $matches);
-                $this->list[] = $matches[1];
-            }
+        $finder = $this->container->getFinder();
+        $finder->name('*.'.$format);
+        foreach ($finder as $file) {
+            $regex = '/^(.*)\.'.$format.'$/';
+            preg_match($regex, $file->getFilename(), $matches);
+            $this->list[] = $matches[1];
         }
     }
 }
