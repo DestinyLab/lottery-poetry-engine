@@ -22,6 +22,8 @@ trait DriverTrait
      */
     protected $container;
 
+    protected $resourcePaths = [];
+
     protected $list = [];
 
     /**
@@ -37,6 +39,7 @@ trait DriverTrait
             ->addPaths($resourcePaths)
             ->setDefaultFormat($fileExtension);
 
+        $this->resourcePath = $resourcePaths;
         $this->setList();
     }
 
@@ -74,8 +77,11 @@ trait DriverTrait
     protected function setList()
     {
         $format = $this->container->getDefaultFormat();
-        $finder = $this->container->getFinder();
-        $finder->create()->name('*.'.$format);
+        $finder = $this->container->getFinder()->create();
+        $finder->files()
+            ->in($this->resourcePath)
+            ->name('*.'.$format);
+
         foreach ($finder as $file) {
             $regex = '/^(.*)\.'.$format.'$/';
             preg_match($regex, $file->getFilename(), $matches);
