@@ -75,7 +75,7 @@ trait DriverTrait
     {
         $format = $this->container->getDefaultFormat();
         $finder = $this->container->getFinder();
-        $finder->name('*.'.$format);
+        $finder->create()->name('*.'.$format);
         foreach ($finder as $file) {
             $regex = '/^(.*)\.'.$format.'$/';
             preg_match($regex, $file->getFilename(), $matches);
