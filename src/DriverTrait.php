@@ -7,6 +7,7 @@
 namespace DestinyLab\LotteryPoetry;
 
 use Indigofeather\ResourceLoader\Container;
+use Symfony\Component\Finder\Finder;
 use InvalidArgumentException;
 
 /**
@@ -77,7 +78,7 @@ trait DriverTrait
     protected function setList()
     {
         $format = $this->container->getDefaultFormat();
-        $finder = $this->container->getFinder()->create();
+        $finder = new Finder();
         $finder->files()
             ->in($this->resourcePath)
             ->name('*.'.$format);
