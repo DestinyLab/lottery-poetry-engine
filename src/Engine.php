@@ -30,7 +30,7 @@ class Engine
      */
     public function draw($getOnlyKey = false)
     {
-        mt_srand(crc32(time() ^ posix_getpid()));
+        mt_srand(crc32(time() ^ posix_getpid() + mt_rand()));
         $rand = mt_rand(0, $this->instance->total() - 1);
         $key = $this->instance->getList()[$rand];
 
