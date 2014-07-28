@@ -34,7 +34,7 @@ Next, update your project's composer.json file to include Lottery-Poetry-Engine:
 
 require_once 'vendor/autoload.php';
 
-$suit = new DestinyLab\LotteryPoetry\Suit(__DIR__.'/resources/');
+$suit = new DestinyLab\LotteryPoetry\Suit(__DIR__.'/resources/', 'yml');
 $suit->get(1);
 $suit->total();
 $suit->getList();
